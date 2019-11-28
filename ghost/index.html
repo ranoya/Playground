@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<!--
+
+Web Playground v3
+Copyright 2019, Prof. Guilherme Ranoya
+https://www.ranoya.com/aulas/tryit
+
+Bibliotecas e aplicações utilizadas
+ACE Editor, https://ace.c9.io/
+jQuery, https://jquery.com/
+MIT License 
+
+URL Variables
+file=[url] - opens a file into the editor
+exemplo=[url] - opens a file behind the canvas being edited
+indirect=[boolean] - refresh the file behind every time a savestate is made (see sync below), and hides the code result window
+lang=[Ace Language] - changes the Ace Editor Highlighter
+theme=[Ace Theme Name] - changes the Ace Editor Theme
+embed=[options] - changes for embedding (slides | plain | minimal)
+ref=[url] - opens a website in reference panel
+refheight=[0->100] - the percentage of the secreen for the reference
+psize=[0->100] - the percentage of the screen width for the editor panel
+editorstartsopen=[boolean] - open the editor once the page is loaded
+refstartsopen=[boolean] - open the reference once the page is loaded
+panels=[0|1|2] - panel's layout
+sync=[boolean] - save state when cookie user is set
+disciplina=[table] - MySQL table name
+atv=[tag] - tag name for the code
+
+Usage
+https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aulas/designgenerativo/exemplos/firstprogram.pde&ref=https://processing.org/reference/&editorstartsopen=true&refheight=70&panels=2&refstartsopen=true
+
+-->
+
+<html>
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="generator" content="artesanal">
+  <meta property="og:title" content="+ Playground">
+  <meta property="og:description" content="Playground de webdesign v3.0">
+  <meta property="og:type" content="website">
+    
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+  <meta property="og:site_name" content="ranoya.com">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image" content="https://www.ranoya.com/Assets/coverimages/playground.jpg" />
+  <meta property="og:image:secure_url" content="https://www.ranoya.com/Assets/coverimages/playground.jpg">
+  <link rel="image_src" type="image/jpg" href="https://www.ranoya.com/Assets/coverimages/playground.jpg" />
+  <title>+ Playground</title>
+  <meta name="generator" content="artesanal" />
+  <meta name="description" content="Playground de webdesign v3.0">
+  <meta name="keywords" content="webdesign, playground, disciplina">
+  <meta name="author" content="Guilherme Ranoya">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link REL="SHORTCUT ICON" HREF="https://www.ranoya.com/aulas/tryit/icon.png">
+  <meta name = "pinterest" content = "nopin" />
+  <meta name="pinterest" content="nohover">
+
+  <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <!-- load ace -->
+  <script src="https://www.ranoya.com/aceeditor/src-min-noconflict/ace.js"></script>
+  <!-- load ace language tools -->
+  <script src="https://www.ranoya.com/aceeditor/src-min-noconflict/ext-language_tools.js"></script>
+
+  <script>
+
+    // GRABER DE PARÂMETROS DE URL
+        $.parametros = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+              return null;
+            } else{
+              return results[1] || 0;
+            }
+        };
+
+
+  </script>
+
+  <style type="text/css" media="screen">
+    @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+
+    #referenci {
+
+      position: fixed;
+      z-index: 4501;
+      bottom: 0;
+      height: 0;
+      right: -50%;
+      width: 50%;
+      border-left: 5px solid gray;
+
+      transition: all 0.6s ease-out;
+
+    }
+
+
+    #editor { 
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #aceditor {
+
+      position: fixed;
+      z-index:4500;
+      width: 50%;
+      height: 100%;
+      right: -50%;
+      top: 0;
+      border-left: 5px solid gray;
+
+      transition: all 0.6s ease-out;
+
+    }
+
+
+    #editorcontainer {
+
+      width: 100%;
+    }
+
+    #meuHTML {
+
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-out;
+
+    }
+
+    #HTMLExemplo {
+
+      width: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      z-index: -1;
+      display: none;
+
+
+    }
+
+    #minhaReferencia {
+
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transition: all 0.6s ease-out;
+
+    }
+
+    .menubutton {
+
+      position: fixed;
+      z-index: 5000;
+      top: 15px;
+      right: 15px;
+      width: 32px;
+      height: 32px;
+      border-radius: 3px;
+      background-color: grey;
+
+    }
+
+    .menubutton:hover {
+
+      background-color: olive;
+
+    }
+
+    #loader {
+    
+    background-image:url(https://www.ranoya.com/Assets/projetao/loading.gif);
+    background-position: center center;
+    background-size: 140px 105px;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: none;
+    z-index: 1000;
+
+  }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<iframe id="meuHTML" frameborder="0"></iframe>
+
+<div id="aceditor">
+<div id="editorcontainer">
+<pre id="editor">
+Utilize o plug-in GhostText no Chrome em conjunto com o Pacote GhostText do Sublime Text&lt;br&gt;
+&lt;a href=&quot;https://chrome.google.com/webstore/detail/ghosttext/godiecgffnchndlihlpaajjcplehddca&quot;&gt;Plug-in Chrome&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;https://packagecontrol.io/packages/GhostText&quot;&gt;GhostText Package para Sublime Text&lt;/a&gt;
+</pre>
+
+<script>
+    // trigger extension
+    ace.require("ace/ext/language_tools");
+    var editor = ace.edit("editor");
+    if($.parametros('lang')) {
+
+      editor.session.setMode("ace/mode/" + $.parametros('lang'));
+
+    } else {
+
+      editor.session.setMode("ace/mode/html");
+
+    }
+    
+
+    if($.parametros('theme')) {
+
+      editor.setTheme("ace/theme/" + $.parametros('theme'));
+    
+    } else {
+
+      editor.setTheme("ace/theme/sqlserver");
+    
+    }
+
+    editor.setShowPrintMargin(false);
+
+    // enable autocompletion and snippets
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: false,
+        autoScrollEditorIntoView: false
+    });
+
+    editor.session.setUseWrapMode(true);
+</script>
+
+<!-- <script src="./show_own_source.js"></script> -->
+</div>
+</div>
+
+
+<script>
+
+      if($.parametros('file')) { 
+        fetch($.parametros('file')).then(response => response.text()).then((data) => {
+
+          editor.session.setValue(data); // set value and reset undo history
+
+        });
+      }
+
+      
+      function changeContent(data) {
+
+        var iframe = document.getElementById('meuHTML');
+        iframe = iframe.contentWindow || ( iframe.contentDocument.document || iframe.contentDocument);
+
+        iframe.document.open();
+        iframe.document.write(data);
+        iframe.document.close();
+
+
+      }
+
+      changeContent(editor.getValue());
+
+      editor.session.on('change', function(delta) {
+        changeContent(editor.getValue());
+      });
+
+
+
+        document.getElementById("aceditor").style.right = "-100%";
+        document.getElementById("meuHTML").style.width = "100%";
+ 
+
+    
+</script>
+
+</body>
+</html>
