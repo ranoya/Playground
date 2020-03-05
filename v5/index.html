@@ -2,7 +2,7 @@
 
 <!--
 
-Web Playground v3 for Processing.js
+Web Playground v5
 Copyright 2019, Prof. Guilherme Ranoya
 https://www.ranoya.com/aulas/tryit
 
@@ -19,17 +19,14 @@ lang=[Ace Language] - changes the Ace Editor Highlighter
 theme=[Ace Theme Name] - changes the Ace Editor Theme
 embed=[options] - changes for embedding (slides | plain | minimal)
 ref=[url] - opens a website in reference panel
-refheight=[0->100] - the percentage of the secreen for the reference
 psize=[0->100] - the percentage of the screen width for the editor panel
 editorstartsopen=[boolean] - open the editor once the page is loaded
-refstartsopen=[boolean] - open the reference once the page is loaded
-panels=[0|1|2] - panel's layout
 sync=[boolean] - save state when cookie user is set
 disciplina=[table] - MySQL table name
 atv=[tag] - tag name for the code
 
 Usage
-https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aulas/designgenerativo/exemplos/firstprogram.pde&ref=https://processing.org/reference/&editorstartsopen=true&refheight=70&panels=2&refstartsopen=true
+https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aulas/designgenerativo/exemplos/firstprogram.pde&ref=https://processing.org/reference/&editorstartsopen=true
 
 -->
 
@@ -41,7 +38,7 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="generator" content="artesanal">
   <meta property="og:title" content="+ Playground">
-  <meta property="og:description" content="Playground de design generativo v3.0">
+  <meta property="og:description" content="Playground de webdesign v3.0">
   <meta property="og:type" content="website">
     
   <meta property="og:image:width" content="600">
@@ -53,11 +50,11 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
   <link rel="image_src" type="image/jpg" href="https://www.ranoya.com/Assets/coverimages/playground.jpg" />
   <title>+ Playground</title>
   <meta name="generator" content="artesanal" />
-  <meta name="description" content="Playground de design generativo v3.0">
-  <meta name="keywords" content="processing, playground, disciplina">
+  <meta name="description" content="Playground de webdesign v3.0">
+  <meta name="keywords" content="webdesign, playground, disciplina">
   <meta name="author" content="Guilherme Ranoya">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+  
   <link rel="icon" type="image/png" href="https://www.ranoya.com/aulas/tryit/icon.png">
   <link rel="shortcut icon" href="https://www.ranoya.com/Assets/coverimages/playFavicon57.png" />
   <link rel="apple-touch-icon" href="https://www.ranoya.com/Assets/coverimages/playFavicon57.png" />
@@ -71,8 +68,7 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
   <meta name="msapplication-navbutton-color" content="#cccccc">
   <!-- iOS Safari -->
   <meta name="apple-mobile-web-app-status-bar-style" content="#cccccc">
-
-
+  
   <meta name = "pinterest" content = "nopin" />
   <meta name="pinterest" content="nohover">
 
@@ -98,15 +94,16 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
   </script>
 
   <style type="text/css" media="screen">
+    @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
 
     #referenci {
 
       position: fixed;
-      z-index: 4501;
-      bottom: 0;
-      height: 0;
-      right: -50%;
+      z-index:4500;
       width: 50%;
+      height: 100%;
+      right: -100%;
+      top: 0;
       border-left: 5px solid gray;
 
       transition: all 0.6s ease-out;
@@ -237,6 +234,8 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
 <div id="seguemouse"></div>
 <script>
 
+var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
 function ligalayer(event) {
 
   document.getElementById("seguemouse").style.display = "block";
@@ -308,18 +307,12 @@ document.write("<a href='javascript:referenc();' class='menubutton' id='refbutto
 
 <div id="loader"></div>
 <iframe id="HTMLExemplo" frameborder="0"></iframe>
-<iframe id="meuHTML" frameBorder="0"></iframe>
+<iframe id="meuHTML" frameborder="0"></iframe>
 
 <div id="aceditor">
 <div id="editorcontainer">
 <pre id="editor">
-void setup() {
-    size(10,10);
-  }
-
-  void draw() {
-
-  }
+Hello World!
 </pre>
 
 <script>
@@ -332,7 +325,7 @@ void setup() {
 
     } else {
 
-      editor.session.setMode("ace/mode/java");
+      editor.session.setMode("ace/mode/html");
 
     }
     
@@ -343,7 +336,7 @@ void setup() {
     
     } else {
 
-      editor.setTheme("ace/theme/tomorrow");
+      editor.setTheme("ace/theme/sqlserver");
     
     }
 
@@ -429,7 +422,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
                 if(data == "OK") {
 
                   console.log("Deu certo");
-
                   if ($.parametros('indirect')) {
 
                     //changeExemplo();
@@ -453,11 +445,11 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
       }
 
-       if ($.parametros('indirect')) {
+      if ($.parametros('indirect')) {
 
         document.getElementById('meuHTML').style.display="none";
 
-      }     
+      }
       
 
       if($.parametros('sync') == 'true' && $.parametros('disciplina') && $.parametros('atv') && getCookie("raufpenomealuno") && getCookie("raufpenomealuno") != "" && getCookie("raufpeemailaluno") && getCookie("raufpeemailaluno") != "") {
@@ -488,26 +480,17 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
               console.log(data);
 
                 $("#loader").css("display", "none");
-
-                lastData = data;
-
-                w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-                tamanho = "size(" + w + "," + h + ");";
-                res =  data.replace(/size\s*\(\s*([0-9])+\s*,\s*([0-9])+\s*\)\s*;/, tamanho);
-
-                editor.setValue(res);
+                editor.setValue(data);
                 editor.clearSelection();
+                lastData = data;
       
+             
                 },
                 error: function(xhr, desc, err) {
                   $("#loader").css("display", "none");
                   console.log(xhr + "\n" + err);
                 }
           });
-
-
 
 
         setInterval(syncwork, 30000);
@@ -523,6 +506,8 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
       var refOpen = false;
 
+
+
       function reposiciona(wS) {
 
         wSize = wS;
@@ -534,40 +519,12 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
           menuOpen = false;
         }
 
-        if (!refOpen) {
-          refOpen = true;
-        } else {
-          refOpen = false;
-        }
-
-        referenc();
         fullsizecode();
         menu();
 
       }
 
-      if($.parametros('panels') == 1) {
 
-        document.getElementById("referenci").style.left = "calc(-" + cSize + "% - 5px);";
-        document.getElementById("referenci").style.width = cSize + "%";
-        document.getElementById("referenci").style.borderLeft = "transparent none 0";
-        document.getElementById("referenci").style.borderRight = "solid grey 5px";
-
-      }
-
-        if($.parametros('panels') == 2) {
-
-        document.getElementById("referenci").style.width = "calc(100% + 5px)";
-        document.getElementById("referenci").style.borderTop = "solid grey 5px";
-        document.getElementById("referenci").style.right = 0; 
-
-      }
-
-      if($.parametros('ref') && $.parametros('refstartsopen')) {
-
-        referenc();
-
-      }
 
 
       if($.parametros('exemplo')) {
@@ -580,13 +537,12 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
         fetch($.parametros('file')).then(response => response.text()).then((data) => {
 
           editor.session.setValue(data); // set value and reset undo history
-          fullsizecode();
 
         });
       }
 
 
-       if($.parametros('embed') == "slides") { 
+      if($.parametros('embed') == "slides") { 
         
         document.getElementById("editorbutton").style.top = "58px";
         document.getElementById("editorbutton").style.right = "30px";
@@ -619,7 +575,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
         document.getElementById("iconbigsizeeditor").style.width = "24px";
         document.getElementById("iconbigsizeeditor").style.height = "24px";
         document.getElementById("bigsizeeditor").style.borderRadius = 0;
-
         
 
         if ($.parametros('ref')) {
@@ -637,8 +592,7 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
       }
 
-
-       if($.parametros('embed') == "minimal") { 
+      if($.parametros('embed') == "minimal") { 
         
         document.getElementById("editorbutton").style.top = "58px";
         document.getElementById("editorbutton").style.right = "30px";
@@ -669,7 +623,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
       }
 
-
       if($.parametros('embed') == "plain") {
 
           document.getElementById("editorbutton").style.display = "none";
@@ -678,11 +631,10 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
           document.getElementById("smallsizeeditor").style.display = "none";
           document.getElementById("mediumsizeeditor").style.display = "none";
           document.getElementById("bigsizeeditor").style.display = "none";
- 
+
       }
 
-
-      function fullsizecode() {
+        function fullsizecode() {
 
           conteudo = editor.getValue();
 
@@ -696,49 +648,73 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
           editor.session.setValue(res);
 
 
-          if (!menuOpen) {
+          if (!menuOpen & !refOpen) {
             document.getElementById("aceditor").style.right = "-" + wSize + "%";
             document.getElementById("aceditor").style.width = wSize + "%";
             document.getElementById("meuHTML").style.width = "100%";
             document.getElementById("HTMLExemplo").style.width = "100%";
-            if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-              document.getElementById("referenci").style.right = "-" + wSize + "%";
-            }
-            if ($.parametros('panels') == 1) {
-              document.getElementById("referenci").style.left = "calc(-" + cSize + "% - 5px)";
-            }
-        
+            document.getElementById("referenci").style.right = "-100%";
+            document.getElementById("referenci").style.width = wSize + "%";
 
             if (mobile < 640) {
 
               document.getElementById("aceditor").style.width = "100%";
               document.getElementById("referenci").style.width = "100%";
               document.getElementById("aceditor").style.right = "-100%";
-              if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-                document.getElementById("referenci").style.right = "-100%";
-              }
-              if ($.parametros('panels') == 1) {
-                document.getElementById("referenci").style.left = "calc(-100% - 5px)";
-              }
+              document.getElementById("referenci").style.right = "-100%";
+              document.getElementById("referenci").style.width = "100%";
 
             }
 
-          } else {
+          } else if (menuOpen & !refOpen) {
 
             document.getElementById("aceditor").style.right = "0";
             document.getElementById("aceditor").style.width = wSize + "%";
             document.getElementById("meuHTML").style.width = cSize + "%";
             document.getElementById("HTMLExemplo").style.width = cSize + "%";
-            if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-              document.getElementById("referenci").style.right = "0";
-            }
-            if ($.parametros('panels') == 1) {
-              document.getElementById("referenci").style.left = "-5px";
-            }
+            document.getElementById("referenci").style.right = "-" + wSize + "%";
+            document.getElementById("referenci").style.width = wSize + "%";
+
+              if (mobile < 640) {
+
+                document.getElementById("aceditor").style.width = "100%";
+                document.getElementById("referenci").style.right = "-100%";
+                document.getElementById("referenci").style.width = "100%";
+
+              } 
+
+            } else if (!menuOpen & refOpen) {
+
+            document.getElementById("aceditor").style.right = cSize + "%";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = cSize + "%";
+            document.getElementById("HTMLExemplo").style.width = cSize + "%";
+            document.getElementById("referenci").style.right = "-100%";
+            document.getElementById("referenci").style.width = wSize + "%";
+
+              if (mobile < 640) {
+
+                document.getElementById("aceditor").style.width = "100%";
+                document.getElementById("referenci").style.right = "-100%";
+                document.getElementById("referenci").style.width = "100%";
+
+              } 
+
+            } else if (menuOpen & refOpen) {
+
+            document.getElementById("aceditor").style.right = cSize + "%";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = "100%";
+            document.getElementById("HTMLExemplo").style.width = "100%";
+            document.getElementById("referenci").style.right = "0";
+            document.getElementById("referenci").style.width = cSize + "%";
 
             if (mobile < 640) {
 
               document.getElementById("aceditor").style.width = "100%";
+              document.getElementById("referenci").style.width = "100%";
+              document.getElementById("aceditor").style.right = "-100%";
+              document.getElementById("referenci").style.right = "0";
               document.getElementById("referenci").style.width = "100%";
 
             }
@@ -747,59 +723,31 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
           }
           
       }
-
+      
 
 
       function changeContent(data) {
 
         var iframe = document.getElementById('meuHTML');
-        
         iframe = iframe.contentWindow || ( iframe.contentDocument.document || iframe.contentDocument);
 
         iframe.document.open();
-
-        iframe.document.write("<style");
-        iframe.document.write(">body,html { margin: 0; padding: 0; }</");
-        iframe.document.write("style>");
-        iframe.document.write("<canvas id='pjs' ");
-        iframe.document.write("style='outline: none;'>");
-        iframe.document.write(" </canvas><scri");
-        iframe.document.write("pt src='https://www.ranoya.com/public/dev/processing.min.js'></sc");
-        iframe.document.write("ript><scrip");
-        iframe.document.write("t type='application/processing' data-processing-target='pjs'>");
-
         iframe.document.write(data);
-
-        iframe.document.write("</scri");
-        iframe.document.write("pt>");
         iframe.document.close();
 
 
       }
 
+      changeContent(editor.getValue());
 
-      w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-      tamanho = "size(" + w + "," + h + ");";
-      res =  editor.getValue().replace(/size\s*\(\s*([0-9])+\s*,\s*([0-9])+\s*\)\s*;/, tamanho);
-      
-      changeContent(res);
 
       editor.session.on('change', function(delta) {
-
-          w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-          h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-          tamanho = "size(" + w + "," + h + ");";
-          res =  editor.getValue().replace(/size\s*\(\s*([0-9])+\s*,\s*([0-9])+\s*\)\s*;/, tamanho);
-          
-        changeContent(res);
-
+        changeContent(editor.getValue());
       });
 
-      
-     function changeExemplo() {
+
+
+      function changeExemplo() {
 
         fetch($.parametros('exemplo')).then(response => response.text()).then((data) => {
 
@@ -815,57 +763,25 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
         });
 
       }
-
-
+      
 
       function referenc() {
 
-        if (!$.parametros('refheight')) {
-
-          if (!refOpen) {
-
+        if (!menuOpen & !refOpen) {
               refOpen = true;
-
-              if (!$.parametros('panels') == 1) {
-              document.getElementById("aceditor").style.height = "50%";
-              }
-              document.getElementById("referenci").style.height = "50%";
-
-          } else {
-
-              refOpen = false;
-
-              if (!$.parametros('panels') == 1) {
-              document.getElementById("aceditor").style.height = "100%";
-              }        
-              document.getElementById("referenci").style.height = "0";
-
-          }
-
-        } else {
-
-          if (!refOpen) {
-
+              menu();
+          } else if (!menuOpen & refOpen) {
               refOpen = true;
-
-              if (!$.parametros('panels') == 1) {
-              document.getElementById("aceditor").style.height = (100 - $.parametros('refheight')) + "%";
-              }
-              document.getElementById("referenci").style.height = ($.parametros('refheight')) + "%";
-
-          } else {
-
+              menu();
+          } else if (menuOpen & refOpen) {
               refOpen = false;
-
-              if (!$.parametros('panels') == 1) {
-              document.getElementById("aceditor").style.height = "100%";
-              }      
-              document.getElementById("referenci").style.height = "0";
-
+              menuOpen = false;
+              menu();
+          } else if (menuOpen & !refOpen) {
+              refOpen = true;
+              menuOpen = false;
+              menu();
           }
-
-        }
-
 
       }
 
@@ -882,74 +798,106 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
         var mobile = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-      if (!menuOpen) {
+      if (!menuOpen & !refOpen) {
 
-        menuOpen = true;
+            menuOpen = true;
 
-        document.getElementById("aceditor").style.right = "0";
-        document.getElementById("meuHTML").style.width = cSize + "%";
-        document.getElementById("HTMLExemplo").style.width = cSize + "%";
-        if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-        document.getElementById("referenci").style.right = "0";
-        document.getElementById("referenci").style.width = wSize + "%";
-        }
-        if ($.parametros('panels') == 1) {
-        document.getElementById("referenci").style.left = "-5px";
-        }
+            document.getElementById("aceditor").style.right = "0";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = cSize + "%";
+            document.getElementById("HTMLExemplo").style.width = cSize + "%";
+            document.getElementById("referenci").style.right = "-" + wSize + "%";
+            document.getElementById("referenci").style.width = wSize + "%";
 
-        if (mobile < 640) {
+            if (mobile < 640) {
 
-          document.getElementById("aceditor").style.width = "100%";
-          document.getElementById("referenci").style.width = "100%";
+                document.getElementById("aceditor").style.width = "100%";
+                document.getElementById("referenci").style.right = "-100%";
+                document.getElementById("referenci").style.width = "100%";
 
-        }
+            }
+
+          } else if (menuOpen & !refOpen) {
+
+            menuOpen = false;
+
+            document.getElementById("aceditor").style.right = "-" + wSize + "%";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = "100%";
+            document.getElementById("HTMLExemplo").style.width = "100%";
+            document.getElementById("referenci").style.right = "-100%";
+            document.getElementById("referenci").style.width = wSize + "%";
+
+              if (mobile < 640) {
+
+                document.getElementById("aceditor").style.width = "100%";
+                document.getElementById("referenci").style.width = "100%";
+                document.getElementById("aceditor").style.right = "-100%";
+                document.getElementById("referenci").style.right = "-100%";
+                document.getElementById("referenci").style.width = "100%";
+
+              } 
+
+            } else if (!menuOpen & refOpen) {
+
+            menuOpen = true;
+
+            document.getElementById("aceditor").style.right = cSize + "%";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = "100%";
+            document.getElementById("HTMLExemplo").style.width = "100%";
+            document.getElementById("referenci").style.right = "0";
+            document.getElementById("referenci").style.width = cSize + "%";
+
+              if (mobile < 640) {
+
+                document.getElementById("aceditor").style.width = "100%";
+                document.getElementById("referenci").style.width = "100%";
+                document.getElementById("aceditor").style.right = "-100%";
+                document.getElementById("referenci").style.right = "0";
+                document.getElementById("referenci").style.width = "100%";
+
+              } 
+
+            } else if (menuOpen & refOpen) {
+
+            menuOpen = false;
+
+            document.getElementById("aceditor").style.right = "-" + wSize + "%";
+            document.getElementById("aceditor").style.width = wSize + "%";
+            document.getElementById("meuHTML").style.width = "100%";
+            document.getElementById("HTMLExemplo").style.width = "100%";
+            document.getElementById("referenci").style.right = "-100%";
+            document.getElementById("referenci").style.width = cSize + "%";
+
+            if (mobile < 640) {
+
+              document.getElementById("aceditor").style.width = "100%";
+              document.getElementById("referenci").style.right = "-100%";
+              document.getElementById("referenci").style.width = "-100%";
+
+            }
 
 
-
-      } else {
-
-        menuOpen = false;
-        document.getElementById("aceditor").style.right = "-" + wSize + "%";
-        document.getElementById("meuHTML").style.width = "100%";
-        document.getElementById("HTMLExemplo").style.width = "100%";
-        if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-        document.getElementById("referenci").style.right = "-" + wSize + "%";
-        }
-        if ($.parametros('panels') == 1) {
-        document.getElementById("referenci").style.left = "calc(-" + cSize + "% - 5px)";
-        }
-        
-
-        if (mobile < 640) {
-
-          document.getElementById("aceditor").style.width = "100%";
-          document.getElementById("referenci").style.width = "100%";
-          document.getElementById("aceditor").style.right = "-100%";
-          if ($.parametros('panels') == 0 || !$.parametros('panels')) {
-          document.getElementById("referenci").style.right = "-100%";
           }
-          if ($.parametros('panels') == 1) {
-          document.getElementById("referenci").style.left = "calc(-100% - 5px)";
-          }
-
-        }
-
-
-
-        }
 
     }
 
 
-      fullsizecode();
+    fullsizecode();
     window.onresize = function(event) {
       fullsizecode();
     };
 
 
+
     if($.parametros('loadaluno') && $.parametros('loadatv') && $.parametros('loademail') && $.parametros('loaddisciplina')) {
         
         console.log("Trabalho de aluno ativado");
+
+        document.cookie = "raufpeemailaluno=" + $.parametros('loademail') + "; path=/";
+
+        document.cookie = "raufpenomealuno=" + $.parametros('loadaluno') + "; path=/";
 
 
           serviceurl = "https://www.ranoya.com/studentworkssync/getwork.php";
@@ -976,16 +924,9 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
               console.log(data);
 
                 $("#loader").css("display", "none");
-                lastData = data;
-
-                w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-                tamanho = "size(" + w + "," + h + ");";
-                res =  data.replace(/size\s*\(\s*([0-9])+\s*,\s*([0-9])+\s*\)\s*;/, tamanho);
-
-                editor.setValue(res);
+                editor.setValue(data);
                 editor.clearSelection();
+                lastData = data;
       
              
                 },

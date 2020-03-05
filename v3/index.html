@@ -7,7 +7,7 @@ Copyright 2019, Prof. Guilherme Ranoya
 https://www.ranoya.com/aulas/tryit
 
 Bibliotecas e aplicações utilizadas
-ACE Editor, https://ace.c9.io/
+ACE Editor, https://ace.c9.io
 jQuery, https://jquery.com/
 MIT License 
 
@@ -57,10 +57,24 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
   <meta name="keywords" content="webdesign, playground, disciplina">
   <meta name="author" content="Guilherme Ranoya">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link REL="SHORTCUT ICON" HREF="https://www.ranoya.com/aulas/tryit/icon.png">
+  
+  <link rel="icon" type="image/png" href="https://www.ranoya.com/aulas/tryit/icon.png">
+  <link rel="shortcut icon" href="https://www.ranoya.com/Assets/coverimages/playFavicon57.png" />
+  <link rel="apple-touch-icon" href="https://www.ranoya.com/Assets/coverimages/playFavicon57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="https://www.ranoya.com/Assets/coverimages/playFavicon72.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="https://www.ranoya.com/Assets/coverimages/playFavicon114.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="https://www.ranoya.com/Assets/coverimages/playFavicon144.png" />
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#cccccc">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#cccccc">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="#cccccc">
+  
   <meta name = "pinterest" content = "nopin" />
   <meta name="pinterest" content="nohover">
-
+  
   <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   <!-- load ace -->
   <script src="https://www.ranoya.com/aceeditor/src-min-noconflict/ace.js"></script>
@@ -201,12 +215,77 @@ https://www.ranoya.com/aulas/tryit/?embed=slides&file=https://www.ranoya.com/aul
 
   }
 
+  #seguemouse {
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 800000;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    display: none;
+  }
+
   </style>
 
 </head>
 
 
 <body>
+
+<div id="seguemouse"></div>
+<script>
+var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+function ligalayer(event) {
+
+  document.getElementById("seguemouse").style.display = "block";
+  document.getElementById("seguemouse").style.cursor = "ew-resize";
+  limite = w;
+  draggin = true;
+}
+
+function desligalayer(event) {
+
+  document.getElementById("seguemouse").style.display = "none";
+  document.getElementById("seguemouse").style.cursor = "auto";
+  limite = 0;
+  draggin = false;
+
+}
+
+
+draggin = false;
+limite = 0;
+
+document.addEventListener("mousemove", function(event) { 
+
+if ((event.clientX - ((cSize * w)/100)) < limite) {
+document.getElementById("aceditor").style.cursor = "ew-resize";
+
+document.addEventListener("mousedown", ligalayer);
+document.addEventListener("mouseup", desligalayer);
+
+if (draggin) {
+
+  reposiciona(100 - ((event.clientX / w) * 100));
+
+}
+
+} else {
+
+document.removeEventListener("mousedown", ligalayer);
+document.removeEventListener("mouseup", desligalayer);
+document.getElementById("seguemouse").style.cursor = "auto";
+
+}
+
+
+});
+
+</script>
+
 
 <a href="javascript: menu();" class="menubutton" id="editorbutton"><img src="https://www.ranoya.com/Assets/WebsiteIcons/codeicon-white.svg" style="width: 26px; height: 26px; margin-top: 3px; margin-left: 3px;" id="iconeditor"></a>
 
@@ -417,6 +496,8 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
           });
 
 
+
+
         setInterval(syncwork, 30000);
 
        }
@@ -603,7 +684,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
             document.getElementById("aceditor").style.right = "-" + wSize + "%";
             document.getElementById("aceditor").style.width = wSize + "%";
             document.getElementById("meuHTML").style.width = "100%";
-            document.getElementById("HTMLExemplo").style.width = "100%";
             if ($.parametros('panels') == 0 || !$.parametros('panels')) {
               document.getElementById("referenci").style.right = "-" + wSize + "%";
             }
@@ -631,7 +711,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
             document.getElementById("aceditor").style.right = "0";
             document.getElementById("aceditor").style.width = wSize + "%";
             document.getElementById("meuHTML").style.width = cSize + "%";
-            document.getElementById("HTMLExemplo").style.width = cSize + "%";
             if ($.parametros('panels') == 0 || !$.parametros('panels')) {
               document.getElementById("referenci").style.right = "0";
             }
@@ -764,7 +843,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
 
         document.getElementById("aceditor").style.right = "0";
         document.getElementById("meuHTML").style.width = cSize + "%";
-        document.getElementById("HTMLExemplo").style.width = cSize + "%";
         if ($.parametros('panels') == 0 || !$.parametros('panels')) {
         document.getElementById("referenci").style.right = "0";
         document.getElementById("referenci").style.width = wSize + "%";
@@ -787,7 +865,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
         menuOpen = false;
         document.getElementById("aceditor").style.right = "-" + wSize + "%";
         document.getElementById("meuHTML").style.width = "100%";
-        document.getElementById("HTMLExemplo").style.width = "100%";
         if ($.parametros('panels') == 0 || !$.parametros('panels')) {
         document.getElementById("referenci").style.right = "-" + wSize + "%";
         }
@@ -822,15 +899,13 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
     };
 
 
-
-    if($.parametros('loadaluno') && $.parametros('loadatv') && $.parametros('loademail') && $.parametros('loaddisciplina')) {
+        if($.parametros('loadaluno') && $.parametros('loadatv') && $.parametros('loademail') && $.parametros('loaddisciplina')) {
         
         console.log("Trabalho de aluno ativado");
 
         document.cookie = "raufpeemailaluno=" + $.parametros('loademail') + "; path=/";
 
         document.cookie = "raufpenomealuno=" + $.parametros('loadaluno') + "; path=/";
-
 
           serviceurl = "https://www.ranoya.com/studentworkssync/getwork.php";
 
