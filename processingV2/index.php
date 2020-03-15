@@ -591,7 +591,6 @@ document.write("<iframe id='minhaReferencia' frameBorder='0' src='"+$.parametros
         document.getElementById("iconbigsizeeditor").style.width = "24px";
         document.getElementById("iconbigsizeeditor").style.height = "24px";
         document.getElementById("bigsizeeditor").style.borderRadius = 0;
-
         
 
         if ($.parametros('ref')) {
